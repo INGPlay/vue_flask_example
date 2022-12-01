@@ -1,0 +1,39 @@
+<div id="app">
+    ---- {{ '{{ message }}' }}
+    <div id="rng">
+        ---- {{ '{{ rng }}' }}
+    </div>
+</div>
+
+
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js">      // Axios 가져오기 </script>
+<script>
+const app = Vue.createApp({
+    data() {
+        return {
+            message: '안녕하세요 Vue!',
+            rng: ""
+        }
+    },
+    methods : {
+        get_rng() {
+            let path = "/api/rng/"
+            
+            axios.get(path).then((res) => {
+                console.log(res)                    // 개발자 도구 (F12)에서 자료구조 확인용
+                console.log(res.data.rng)
+                this.rng = res.data.rng;
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+    },
+    created() {
+        this.get_rng()
+    }
+})
+
+app.mount('#app')       // '#app'을 '#rng'로 적용하면 rng만 vue가 적용됨
+</script>
